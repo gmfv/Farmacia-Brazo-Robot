@@ -18,15 +18,13 @@ class FormularioFarmacia:
         self.t1 = threading.Thread(target=self.ventanamed)
         self.t2 = threading.Thread(target=self.ventanaprocess)
         self.t3 = threading.Thread(target=self.ventanarepon)
-        #self.t5 = threading.Thread(target=self.imprimirRecepcion)
         self.t1.daemon = True
         self.t2.daemon = True
         self.t3.daemon = True
-        #self.t5.daemon = True
-        self.button1state = tk.Button(self.master, text="CLIENTE", command=self.t1.start, height=4,
+        self.button1state = tk.Button(self.master, text="CLIENTE", command=self.AbrirVentanaCliente, height=4,
                                        width=20, )
         self.button1state.pack(side='top', ipadx=50, padx=10, pady=15)
-        self.button2state = tk.Button(self.master, text="REPOSICIÓN", command=self.t3.start, height=4,
+        self.button2state = tk.Button(self.master, text="REPOSICIÓN", command=self.AbrirVentanaReposicion, height=4,
                                        width=20, )
         
         self.button2state.pack(side='top', ipadx=50, padx=20, pady=15)
@@ -45,17 +43,27 @@ class FormularioFarmacia:
     #            self.t3.start()
     #        except:
     #            pass
+    def AbrirVentanaCliente(self):
+        try:
+            self.t1.start()
+        except:
+            self.ventanamed()
+
+    def AbrirVentanaReposicion(self):
+        try:
+            self.t3.start()
+        except:
+            self.ventanarepon()
 
     def LecturaSerial(self):
-        self.lectura= self.ser.readline().strip()
-        #if (newWindow.state == 'normal' || newWindow2.state() == 'normal'):
+        self.lectura= self.ser.readline().decode('utf-8').strip()
         self.master.after(100, self.LecturaSerial)
 
     def EscrituraSerial(self, x):
         self.ser.write(bytes(x, 'UTF-8'))
 
     def ventanamed(self):
-        #self.master.withdraw()
+        self.master.withdraw()
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title("SOLICITUD DE MEDICAMENTO")
         self.newWindow.geometry("600x700")
@@ -104,7 +112,7 @@ class FormularioFarmacia:
         self.BotonAceptar.pack(side='top', ipadx=10, padx=10, pady=15)
         self.BotonQuit= tk.Button(self.newWindow, text="Volver", command=self.quitventanamed, height=4, width=20, )
         self.BotonQuit.pack(side='top', ipadx=10, padx=10, pady=15)
-        self.EscrituraSerial('CM')
+        self.EscrituraSerial('C')
 
     def quitventanamed(self):
         self.newWindow.destroy()
@@ -163,14 +171,9 @@ class FormularioFarmacia:
             self.idcarga.set("")
             self.cantidadcarga.set("")
 
-    #def imprimirRecepcion(self):
-    #    print(self.lectura)
-    #    self.master.after(150, self.imprimirRecepcion)
-
     def solicitar(self):
         print("Estamos enviando C de Py 2 Ard")
         self.EscrituraSerial('C')
-    #   self.t5.start()
         self.BotonAceptar['state'] = tk.DISABLED
         self.BotonQuit['state'] = tk.DISABLED
         self.newWindow.update()
@@ -203,11 +206,15 @@ class FormularioFarmacia:
     def ventanaprocess(self):
         print("Se esta intentando crear la ventana process")
         self.VentanaProceso = tk.Toplevel(self.master)
-        self.VentanaProceso.title("ESTADO DEL PEDIDO")
         self.estado = tk.StringVar()
         self.estado.set("PROCESANDO")
         self.tkLabel = ttk.Label(self.VentanaProceso, textvariable=self.estado)
-        self.estado.set("AGUARDE, YA ESTA PREPARÁNDOSE SU PEDIDO")
+        if (self.tarea==0):
+            self.VentanaProceso.title("ESTADO DEL PEDIDO")
+            self.estado.set("AGUARDE, YA ESTA PREPARÁNDOSE SU PEDIDO")
+        elif (self.tarea==1):
+            self.VentanaProceso.title("PROGRESO EN LA REPOSICION")
+            self.estado.set("ROBOT EN MOVIMIENTO")
         self.tkLabel.pack()
         self.progressbar_r = ttk.Progressbar(self.VentanaProceso, length=400, value=0)
         self.progressbar_r.pack()
@@ -220,42 +227,22 @@ class FormularioFarmacia:
         progress_l= ""
         progress_l= self.lectura
         print(progress_l)
-        if (progress_l == b'20'):
-             self.progressbar_r["value"] = 20
-             self.progressbar_r.pack()
-             self.VentanaProceso.after(100, self.progresobarra)
-        elif (progress_l == b'40'):
-             self.progressbar_r["value"] = 40
-             self.VentanaProceso.after(100, self.progresobarra)
-             self.progressbar_r.pack()
-        elif (progress_l == b'60'):
-             self.progressbar_r["value"] = 60
-             self.VentanaProceso.after(100, self.progresobarra)
-             self.progressbar_r.pack()
-        elif (progress_l == b'80'):
-             self.progressbar_r["value"] = 80
-             self.VentanaProceso.after(100, self.progresobarra)
-             self.progressbar_r.pack()
-        elif (progress_l == b'100'):
-             self.progressbar_r["value"] = 99.9
-             self.progressbar_r.pack()
-             #self.ser.write(bytes('I', 'UTF-8'))
-             self.estado.set("TERMINADO")
-             self.VentanaProceso.after(2000, self.cerrando)
+        if (progress_l.isnumeric()):
+            if (progress_l == '100'):
+                self.progressbar_r["value"] = 99.9
+                self.progressbar_r.pack()
+                #self.ser.write(bytes('I', 'UTF-8'))
+                self.estado.set("TERMINADO")
+                if (self.tarea==0):
+                    self.VentanaProceso.after(2000, self.cerrando)
+                elif(self.tarea==1):
+                    self.VentanaProceso.after(2000, self.VentanaProceso.destroy())       
+            else:
+                self.progressbar_r["value"] = progress_l
+                self.progressbar_r.pack()
+                self.VentanaProceso.after(100, self.progresobarra)
         else:
-            self.VentanaProceso.after(100, self.progresobarra)
-    
-    def cerrando(self):
-        self.VentanaProceso.destroy()
-        self.BotonAceptar['state'] = tk.NORMAL
-        self.BotonQuit['state'] = tk.NORMAL
-        self.idcarga.set("")
-        self.nombrecarga.set("")
-        self.stockcarga.set("")
-        self.cantidadcarga.set("") 
-        if (self.tarea==0):
-            self.descricarga.set("")
-            self.preciocarga.set("")
+            self.VentanaProceso.after(100, self.progresobarra)        
 
     def ventanarepon(self):
         self.master.withdraw()
@@ -294,7 +281,6 @@ class FormularioFarmacia:
         self.BotonQuit.pack(side='top', ipadx=10, padx=10, pady=15)
         self.t4 = threading.Thread(target=self.cargar)
         self.t4.daemon = True
-        self.EscrituraSerial('R')
 
     def quitventanarep(self):
          self.cam.release()
@@ -336,25 +322,47 @@ class FormularioFarmacia:
         self.lmain2.after(10, self.CamReposicion)
 
     def cargar(self):
+        self.EscrituraSerial('R')
         self.var = tk.IntVar()
         respuesta = self.pedido1.consulta(self.idcarga.get())
-        self.nombrecarga.set(str(respuesta[0][0]))
-        self.stockcarga.set(str(respuesta[0][3]))
-        self.BotonQuit['state'] = tk.DISABLED
-        self.newWindow2.update()
-        datos = (self.cantidadcarga.get(), self.idcarga.get())
-        stockviejo = self.pedido1.consultastock(datos[1]) # Verifica si existe el medicamento
-        if int(stockviejo[0][0])> 0: #Existe el producto
-            stocknuevo= int(stockviejo[0][0])+int(datos[0])
-            datos2= (str(stocknuevo), str(datos[1]))
+        if (len(respuesta)>0):  # Verifica si existe el medicamento
+            self.nombrecarga.set(str(respuesta[0][0]))
+            self.stockcarga.set(str(respuesta[0][3]))
+            self.BotonQuit['state'] = tk.DISABLED
+            self.newWindow2.update()
+            datos = self.idcarga.get()
+            stockviejo = str(respuesta[0][3])
+            stocknuevo= int(stockviejo)+1
+            datos2= (str(stocknuevo), str(datos))
             self.pedido1.updatestock(datos2)
-            self.newWindow2.after(3000, self.var.set, 1)
+            self.codigo=stockviejo+"M"+str(datos2[1])
+            print(self.codigo)
+            self.tarea=1
+            self.EscrituraSerial(self.codigo)
             print("waiting...")
-            self.newWindow2.wait_variable(self.var)
+            self.ventanaprocess()
+            self.newWindow2.wait_window(self.VentanaProceso)
+            print("Acabo espera")
+            self.BotonQuit['state'] = tk.NORMAL
+            self.idcarga.set("")
+            self.nombrecarga.set("")
+            self.stockcarga.set("")
         else:
             mb.showinfo("Información", "No se encuentra registrado el producto")
         self.t4 = None
         self.t4 = threading.Thread(target=self.cargar)
+            
+    def cerrando(self):      
+        self.BotonQuit['state'] = tk.NORMAL
+        self.idcarga.set("")
+        self.nombrecarga.set("")
+        self.stockcarga.set("")
+        #if (self.tarea==0):
+        self.BotonAceptar['state'] = tk.NORMAL
+        self.VentanaProceso.destroy()
+        self.cantidadcarga.set("") 
+        self.descricarga.set("")
+        self.preciocarga.set("")
     
 root = tk.Tk()
 applicacion = FormularioFarmacia(root)

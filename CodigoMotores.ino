@@ -14,7 +14,7 @@ int PosicionInicial[6]={90, 150, 35, 140, 85, 80};
 int servoPosCinta[6]= {20, 20, 20, 20, 20, 20};
 int servoPosCerrarPinza[6]= {10, 10, 10, 10, 10, 10};
 int aux[6];
-String incomingData, Cantidad, Medicamento, recepcion;
+String incomingData, Cantidad, Medicamento, recepcion, StockActual, ID;
 int PosMed[16][6]={{10, 10, 10, 10, 10, 10},
                   {10, 10, 10, 10, 10, 10},
                   {10, 10, 10, 10, 10, 10},
@@ -61,21 +61,25 @@ void loop() {
     //if (digitalRead(botonR) == HIGH) Serial.println("H");
       //if(digitalRead(botonR) == LOW){
           if(Serial.available()>0){
-            
             recepcion=Serial.readString();
             Serial.println(recepcion);
             if (recepcion[0]=='R'){
-              Serial.println("RR"); //Se debe avisar que se esta reponiendo
-              digitalWrite(ledPIN_run, HIGH);
-              digitalWrite(ledPIN_stop, LOW);
+               Serial.println("RR"); //Se debe avisar que se esta reponiendo
+               Serial.println(recepcion);
+               incomingData=recepcion.substring(1);
+               StockActual = getValue(incomingData, 'M', 0);
+               ID = getValue(incomingData, 'M', 1);
+               Serial.println(StockActual+'S'+ID);
+              //digitalWrite(ledPIN_run, HIGH);
+              //digitalWrite(ledPIN_stop, LOW);
+              
             //Definimos la posicion a la que debe ir como la de entrega y movemos los servos a la posicion de entreg
-               do {
-                  incomingData1 = recepcion[1]-'0';
-                }while(incomingData1!=1 || incomingData1!=2 || incomingData1!=3 || incomingData1!=4 ||incomingData1!=5 ||incomingData1!=6 || incomingData1!=7 || incomingData1!=8 || incomingData1!=9 || incomingData1!=10 || incomingData1!=11 || incomingData1!=12 || incomingData1!=13 || incomingData1!=14 || incomingData1!=15 || incomingData1!=16); //Esperamos que la lectura sea una valida
-               Serial.println("S") ;
+               Serial.println("M1") ;
                memmove(servoPos,servoPosCinta, sizeof(servoPos));
                MoverServo(servoPPos, servoPos, myServos);
                memmove(servoPPos,servoPos, sizeof(servoPos));
+               Serial.println("M2") ;
+               Serial.println(40);
                
                //Se debe mover la servos especificos para agarrar el medicamento (Cierra la pinza)
                servoPos[4]=120;//Definir posicion de la pinza para cerrar
@@ -84,21 +88,22 @@ void loop() {
                AyCPinza(servoPPos[5], servoPos[5], myServos[5]);
                servoPPos[4]=servoPos[4]; //Se actualiza la posicion previa a la que se encuentra actualmente
                servoPPos[5]=servoPos[5];
-             
+               Serial.println(60);
+               
                for (int i=0; i<16; i++){
-                  if (incomingData1 == i){
-                    for(int j=0; j<6; j++){
-                      aux[j]=PosMed[i][j];
-                      }
-                    memmove(servoPosMedicamento,aux, sizeof(servoPosMedicamento));
+                  if (ID.toInt() == i){
+                    for(int j=0; j<6; j++){aux[j]=PosMed[i][j];}
                   }
                 }
+
+               memmove(servoPosMedicamento,aux, sizeof(servoPosMedicamento));
                           
                //Se mueve al estante del medicamento
-                memmove(servoPos,servoPosMedicamento, sizeof(servoPos));
+               memmove(servoPos,servoPosMedicamento, sizeof(servoPos));
                MoverServo(servoPPos, servoPos, myServos);
-                memmove(servoPPos,servoPos, sizeof(servoPos));
-    
+               memmove(servoPPos,servoPos, sizeof(servoPos));
+               Serial.println(80);
+                
                //Se abre la pinza
                servoPos[4]=120;//Definir posicion de la pinza para abrir
                servoPos[5]=120;
@@ -110,17 +115,15 @@ void loop() {
                 //Vuelve a la posicion inicial
                memmove(servoPos,PosicionInicial, sizeof(servoPos));
                MoverServo(servoPPos, servoPos, myServos);
-                memmove(servoPPos,servoPos, sizeof(servoPos));
+               memmove(servoPPos,servoPos, sizeof(servoPos));
+               Serial.println(100);
       }
       else if (recepcion[0]='C'){
         Serial.println("CC");
         Serial.println(recepcion);
         incomingData=recepcion.substring(1);
-      //Serial.println(Serial.available());
-    //if (Serial.available() > 1) {
-      //delay(10);
-      Medicamento = getValue(incomingData, 'M', 0);
-      Cantidad = getValue(incomingData, 'M', 1);
+        Medicamento = getValue(incomingData, 'M', 1);
+        Cantidad = getValue(incomingData, 'M', 0);
       
       //if (Medicamento == "1" || Medicamento == "2" || Medicamento == "3" || Medicamento == "4" || Medicamento == "5" || Medicamento == 6 || Medicamento == 7 || Medicamento == 8 || Medicamento == 9 ||Medicamento == 10 ||Medicamento == 11 ||Medicamento == 12 ||Medicamento == 13 ||Medicamento == 14 ||Medicamento == 15 ||Medicamento == 16 ){
        Serial.println(Medicamento+'S'+Cantidad);
@@ -133,22 +136,22 @@ void loop() {
            MoverServo(servoPPos, servoPos, myServos);
            memmove(servoPPos, servoPos, sizeof(servoPosEstante));
            //Debe enviar mensaje de 20%
-           evolution=20*(contador+1/Cantidad.toInt())
+           evolution=((100/Cantidad.toInt())/5)*(contador+1);
            Serial.println(evolution);
            
            //Se debe mover la servos especificos para agarrar el medicamento (Posicion del estante con agarre)
            memmove(servoPos, servoPosMedicamento, sizeof(servoPos));
            MoverServo(servoPPos, servoPos, myServos);
            memmove(servoPPos,servoPos, sizeof(servoPos));
-           evolution=40*(contador+1/Cantidad.toInt())
+           evolution=((100/Cantidad.toInt())/5)*2*(contador+1);
            //Debe enviar mensaje de 40%
-           Serial.println(40);
+           Serial.println(evolution);
            
            //Se debe volver a la posicion del estante sin agarre
            memmove(servoPos,servoPosEntregaAbierto, sizeof(servoPos));
            MoverServo(servoPPos, servoPos, myServos);
            memmove(servoPPos,servoPos, sizeof(servoPos));
-           evolution=60*(contador+1/Cantidad.toInt())
+           evolution=((100/Cantidad.toInt())/5)*3*(contador+1);
            //Debe enviar mensaje de 60%
            Serial.println(evolution);
            
@@ -156,16 +159,18 @@ void loop() {
            memmove(servoPos,servoPosEntregaCerrado, sizeof(servoPos));
            MoverServo(servoPPos, servoPos, myServos);
            memmove(servoPPos,servoPos, sizeof(servoPos));
+           
            //La pinza suelta los medicamentos
            //Debe enviar mensaje de 80%
-           evolution=80*(contador+1/Cantidad.toInt())
+           evolution=((100/Cantidad.toInt())/5)*4*(contador+1);
            Serial.println(evolution);
+           
            //Vuelve a la posicion inicial
            memmove(servoPos,PosicionInicial, sizeof(servoPos));
            MoverServo(servoPPos, servoPos, myServos);
            memmove(servoPPos,servoPos, sizeof(servoPos));
            //Debe enviar mensaje de 99.9%
-           evolution=99*(contador+1/Cantidad.toInt())
+           evolution=(100/Cantidad.toInt())*(contador+1);
            Serial.println(evolution);
            contador=contador+1;
         }
