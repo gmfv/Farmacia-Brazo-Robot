@@ -91,7 +91,7 @@ class FormularioFarmacia:
         self.labeldescri = ttk.Label(self.newWindow, text="Descripcion")
         self.labeldescri.pack()
         self.descricarga = tk.StringVar()
-        self.entrydescri = ttk.Entry(self.newWindow, textvariable=self.descricarga, state="readonly")
+        self.entrydescri = ttk.Entry(self.newWindow, textvariable=self.descricarga, state="readonly", width=40)
         self.entrydescri.pack()
         self.labelprecio = ttk.Label(self.newWindow, text="Precio")
         self.labelprecio.pack()
