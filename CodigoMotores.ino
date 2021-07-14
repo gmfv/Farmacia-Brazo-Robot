@@ -10,13 +10,13 @@ int servoPosEntregaCerrado[6]={90, 90, 90, 90, 90, 90}; //Posicion del reponedor
 int servoPosEntregaAbierto[6]={90, 90, 90, 150, 150, 150}; //Posicion del reponedor
 int servoPosReponedorCerrado[6]={70, 70, 70, 70, 70, 70}; //Posicion reponedor sin agarrar el medicamento
 int servoPosReponedorAbierto[6]={70, 70, 70, 100, 100, 100}; //Posicion reponedor sin agarrar el medicamento
-int PosicionInicial[6]={90, 150, 35, 140, 85, 80};
-int servoPosCinta[6]= {20, 20, 20, 20, 20, 20};
-int servoPosCerrarPinza[6]= {10, 10, 10, 10, 10, 10};
+int PosicionInicial[6]={90, 90, 90, 90, 90, 90};
+int servoPosCinta[6]= {100, 100, 100, 100, 100, 100};
+//int servoPosCerrarPinza[6]= {10, 10, 10, 10, 10, 10};
 int aux[6];
 String incomingData, Cantidad, Medicamento, recepcion, StockActual, ID;
-int PosMed[16][6]={{10, 10, 10, 10, 10, 10},
-                  {10, 10, 10, 10, 10, 10},
+int PosMed[16][6]={{100, 100, 100, 100, 100, 100},
+                  {100, 100, 100, 100, 100, 100},
                   {10, 10, 10, 10, 10, 10},
                   {10, 10, 10, 10, 10, 10},
                   {10, 10, 10, 10, 10, 10},
@@ -57,8 +57,6 @@ void setup() {
     delay(20);
 }
 void loop() {
-    //if (digitalRead(botonR) == LOW) Serial.println("R");
-    //if (digitalRead(botonR) == HIGH) Serial.println("H");
       //if(digitalRead(botonR) == LOW){
           if(Serial.available()>0){
             recepcion=Serial.readString();
@@ -91,7 +89,7 @@ void loop() {
                Serial.println(60);
                
                for (int i=0; i<16; i++){
-                  if (ID.toInt() == i){
+                  if (ID.toInt()-1 == i){
                     for(int j=0; j<6; j++){aux[j]=PosMed[i][j];}
                   }
                 }
