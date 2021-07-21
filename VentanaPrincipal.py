@@ -43,7 +43,6 @@ class FormularioFarmacia:
         self.button3state['font'] =self.fuente1
         self.button3state.place(x=120, y= 296)
         self.ser = serial.Serial('COM3', 115200, timeout=.1)
-        self.modo="Cliente"
         self.LecturaSerial()
     def AbrirVentanaCliente(self):
         try:
@@ -61,13 +60,12 @@ class FormularioFarmacia:
         self.lectura= self.ser.readline().decode('utf-8').strip()
         if (self.lectura == "R1"):
             self.saludo['text']= "FUERA DE SERVICIO\nNUESTRO ROBOT'i\n ESTÁ REPONIENDO \nSTOCK"
-            self.modo="Reposicion"
             self.AbrirVentanaReposicion()
+            #self.master.after(10, self.LecturaSerial)
         elif (self.lectura == "P"):
             self.saludo['text']= "PUERTA DEL\n REPONEDOR ABIERTA"
-        elif(self.modo=="Reposicion" and self.lectura=="RF"):
+        elif(self.lectura=="RF"):
             self.saludo['text']= "¡BIENVENIDO! \n Seleccione *PEDIDO* \npara solicitar \nun medicamento"
-            self.modo="Cliente"
         self.master.after(100, self.LecturaSerial)
 
     def EscrituraSerial(self, x):
@@ -204,6 +202,16 @@ class FormularioFarmacia:
             self.stockcarga.set(str(respuesta[0][3]))
             pago=int(respuesta[0][2])*int(self.cantidadcarga.get())
             self.montocarga.set(str(pago))
+            if (int(respuesta[0][3])<int(self.cantidadcarga.get())):
+                mb.showinfo("Informacion", "No se hay suficientes medicamentos requeridos")
+                self.idcarga.set("")
+                self.cantidadcarga.set("")
+                self.nombrecarga.set("")
+                self.descricarga.set("")
+                self.preciocarga.set("")
+                self.stockcarga.set("")
+                self.montocarga.set("")
+                self.tkLabel2['text'] = "Acerque el código QR \nde su receta a la \ncámara. Por favor"
         else:
             mb.showinfo("Informacion", "No se han encontrados los datos")
             self.idcarga.set("")
@@ -235,6 +243,7 @@ class FormularioFarmacia:
                 self.EscrituraSerial(self.codigo)
                 try:
                     self.t2.start()
+                    self.EscrituraSerial(self.codigo)
                 except:
                     self.ventanaprocess()
                 #self.t2.join()
@@ -261,6 +270,7 @@ class FormularioFarmacia:
         #self.VentanaProceso.protocol("WM_DELETE_WINDOW", self.cerrando)
 
     def progresobarra(self):
+        #self.EscrituraSerial('R')
         print("Se ingreso a la funcion de la barra")
         progress_l= ""
         progress_l= self.lectura
@@ -269,12 +279,12 @@ class FormularioFarmacia:
             if (progress_l == '100'):
                 self.progressbar_r["value"] = 99.9
                 self.progressbar_r.pack()
-                #self.ser.write(bytes('I', 'UTF-8'))
-                self.estado.set("TERMINADO. RETIRE SU PEDIDO")
                 if (self.tarea==0):
+                    self.estado.set("TERMINADO. RETIRE SU PEDIDO")
                     self.VentanaProceso.after(3000, self.cerrando)
                 elif(self.tarea==1):
-                    self.newWindow2.after(3000, self.VentanaProceso.destroy())       
+                    self.estado.set("NUEVA REPOSICIÓN GUARDADA")
+                    self.newWindow2.after(3000, self.quitventanarep)   
             else:
                 self.progressbar_r["value"] = progress_l
                 self.progressbar_r.pack()
@@ -289,6 +299,7 @@ class FormularioFarmacia:
         self.newWindow2.geometry("600x600")
         self.lmain2 = tk.Label(self.newWindow2, text="CÁMARA INICIALIZÁNDOSE, PODRÍA DEMORAR 15 SEGUNDOS. AGRADECEMOS SU PACIENCIA")
         self.lmain2.pack()
+        self.idcargar = tk.StringVar()
         self.parameters = cv2.aruco.DetectorParameters_create()
         self.aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_50)
         #Se carga el detector de objetos
@@ -304,7 +315,6 @@ class FormularioFarmacia:
         self.tkLabel2.pack()
         self.labelid = ttk.Label(self.newWindow2, text="ID: ")
         self.labelid.pack()
-        self.idcargar = tk.StringVar()
         self.entryid = ttk.Entry(self.newWindow2, textvariable=self.idcargar, state="readonly")
         self.entryid.pack()
         self.labelnombre = ttk.Label(self.newWindow2, text="Nombre")
@@ -327,6 +337,7 @@ class FormularioFarmacia:
 
     def quitventanarep(self):
          self.cam.release()
+         self.VentanaProceso.destroy()
          self.newWindow2.destroy()
          self.t3 = None
          self.t3 = threading.Thread(target=self.ventanarepon)
@@ -408,7 +419,7 @@ class FormularioFarmacia:
 
     def cargar(self):
         print("Estamos enviando R de Py 2 Ard")
-        #self.EscrituraSerial('R')
+        self.EscrituraSerial('R')
         respuesta = self.pedido1.consulta(self.idcargar.get())
         if (len(respuesta)>0):  # Verifica si existe el medicamento
             self.nombrecargar.set(str(respuesta[0][0]))
@@ -417,7 +428,7 @@ class FormularioFarmacia:
             self.newWindow2.update()
             datos = self.idcargar.get()
             stockviejo = str(respuesta[0][3])
-            self.codigo="R"+stockviejo+"M"+str(datos)
+            self.codigo=stockviejo+"M"+str(datos)
             print(self.codigo)
             self.tarea=1
             self.EscrituraSerial(self.codigo)
@@ -428,7 +439,7 @@ class FormularioFarmacia:
             stocknuevo= int(stockviejo)+1
             datos2= (str(stocknuevo), str(datos))
             self.pedido1.updatestock(datos2)
-            self.BotonQuitr['state'] = tk.NORMAL
+            #self.BotonQuitr['state'] = tk.NORMAL
             self.idcargar.set("")
             self.nombrecargar.set("")
             self.stockcargar.set("")
