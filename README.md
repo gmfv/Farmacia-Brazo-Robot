@@ -51,7 +51,7 @@ Se deben hacer los cambios necesarios en el código pedido.py para lograr una co
 * [MySQL-Connector](https://dev.mysql.com/doc/connector-python/en/) - Conexión con la base de datos
 
 
-
+----------------------------------------------------------
 
 **Giohanna Martinez** - [gmfv](https://github.com/gmfv) 😊
 
