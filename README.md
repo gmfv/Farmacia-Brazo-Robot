@@ -51,6 +51,6 @@ Se deben hacer los cambios necesarios en el código pedido.py para lograr una co
 * [MySQL-Connector](https://dev.mysql.com/doc/connector-python/en/) - Conexión con la base de datos
 
 
-* **Giohanna Martinez** - [gmfv](https://github.com/gmfv) 😊
+**Giohanna Martinez** - [gmfv](https://github.com/gmfv) 😊
 
 #### El proyecto se ha desarrollado como proyecto de Robótica 1 en la Facultad de Ingeniería de la UNA
