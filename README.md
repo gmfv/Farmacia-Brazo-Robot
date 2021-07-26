@@ -20,7 +20,7 @@ Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia
 
 * Los medicamentos y las recetas estarán codificadas utilizando codificación QR. Para la solicitud del cliente con formato _ID:Nombre:Cantidad_, para reposición con el formato _ID:Nombre_
 
-* Para la lectura del código QR del cliente, se utiliza la cámara del ordenador, para la lectura del código QR del medicamento para reposición se utiliza la cámara del móvil.
+* Para la lectura del código QR del cliente, se utilizará la cámara del ordenador, para la lectura del código QR del medicamento para reposición se utilizará la cámara del móvil.
 
 * La interfaz con el usuario deberá mostrar al usuario la receta leída, incluyendo cantidad y la disponibilidad, y consultar su confirmación sobre el pedido (por teclado). Además, debe avisar al usuario con mensajes de espera y cuando puede abrir la caja para retirar su producto. Si no hay disponible el producto también debe notificar al usuario.
 
@@ -47,6 +47,6 @@ Se deben hacer los cambios necesarios en el código pedido.py para lograr una co
 * [MySQL-Connector](https://dev.mysql.com/doc/connector-python/en/) - Conexión con la base de datos
 
 
-## Autor ✒️
+## Autora ✒️
 
 * **Giohanna Martinez** - [gmfv](https://github.com/gmfv) 😊
