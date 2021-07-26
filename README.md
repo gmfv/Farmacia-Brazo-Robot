@@ -7,6 +7,8 @@ Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia
 * 3 Servos MG996R y 3 servos SG90.
 * 1 Arduino UNO y su cable USB.
 * 1 botón.
+* 2 leds (Uno para indicar que se encuentra el robot moviendo y otro para indicar que se encuentra parado)
+* Resistencias (para hace el circuito PullUp con los Leds) 
 * Cables jumpers.
 * Adaptador DC de 6V para alimentación de todos los servos.
 * Estante de 4x4
@@ -32,7 +34,9 @@ Verificar que se encuentra instalada la librería Servo.h para el arduino.
  
 Instalación del programa [IP Webcam](https://www.programaspato.com/es/2012/04/ipwebcam-aplicacion-para-utilizar-webcam-de-movil-android-con-pc-via-wifi/) en el teléfono móvil, o aplicación similar, para la lectura del QR en la reposición. Variar la resolución de la cámara de ser necesario.
 
-Creación de la base de datos, con el código BD.sql y agregar los medicamentos disponibles con BD_agregar.
+Creación de la base de datos, con el código BD.sql y agregar los medicamentos disponibles con BD_agregar.sql
+
+Generar códigos QR con el formato ID:Nombre:Cantidad para simular las solicitudes de medicamento por parte del cliente.
 
 ### Modificaciones a realizar 🔧
 
