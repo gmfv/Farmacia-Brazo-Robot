@@ -1,5 +1,5 @@
 # FarmaciaBrazoRobotGUI
-Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia, con un brazo robot de 6GDL. Visión artificial implementada para la reposición
+Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia, con un brazo robot de 6GDL. Visión artificial implementada para la reposición.
 
 ## Materiales 🚀
 
@@ -51,6 +51,6 @@ Se deben hacer los cambios necesarios en el código pedido.py para lograr una co
 * [MySQL-Connector](https://dev.mysql.com/doc/connector-python/en/) - Conexión con la base de datos
 
 
-## Autora ✒️
-
 * **Giohanna Martinez** - [gmfv](https://github.com/gmfv) 😊
+
+#### El proyecto se ha desarrollado como proyecto de Robótica 1 en la Facultad de Ingeniería de la UNA
