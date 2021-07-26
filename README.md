@@ -36,7 +36,7 @@ Instalación del programa [IP Webcam](https://www.programaspato.com/es/2012/04/i
 
 Creación de la base de datos, con el código BD.sql y agregar los medicamentos disponibles con BD_agregar.sql
 
-Generar códigos QR con el formato ID:Nombre:Cantidad para simular las solicitudes de medicamento por parte del cliente.
+Generar códigos QR con el formato _ID:Nombre:Cantidad para simular_ las solicitudes de medicamento por parte del cliente.
 
 ### Modificaciones a realizar 🔧
 
