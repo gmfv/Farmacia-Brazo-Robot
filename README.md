@@ -43,4 +43,4 @@ Se deben hacer los cambios necesarios en el código pedido.py para lograr una co
 
 **Giohanna Martinez** - [gmfv](https://github.com/gmfv) 😊
 
-#### El proyecto se ha desarrollado como proyecto de Robótica 1 en la Facultad de Ingeniería de la UNA
+#### El proyecto se ha desarrollado como proyecto final de Robótica 1 en la carrera de Ingeniería Mecatrónica de la FIUNA
