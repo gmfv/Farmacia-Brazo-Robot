@@ -1,5 +1,5 @@
-# FarmaciaBrazoRobotGUI
-Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia, con un brazo robot de 6GDL. Visión artificial implementada para la reposición.
+# Farmacia con Brazo Robot y solicitudes en código QR
+Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia + control del movimiento de un brazo robot de 6GDL + visión artificial implementada para la reposición.
 
 ## Materiales
 * Placa Arduino
