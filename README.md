@@ -1,4 +1,4 @@
-# Farmacia con Brazo Robot y solicitudes en código QR
+# Farmacia con brazo robot y solicitudes en código QR
 Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia + control del movimiento de un brazo robot de 6GDL + visión artificial implementada para la reposición.
 
 ## Materiales
