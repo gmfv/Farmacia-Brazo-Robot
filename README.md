@@ -1,21 +1,49 @@
 # Farmacia con brazo robot y solicitudes en código QR
 Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia + control del movimiento de un brazo robot de 6GDL + visión artificial implementada para la reposición.
 
+## Objetivos
+### Objetivo General
+* Diseñar e implementar un sistema robótico para la automatización de la reposición, manejo de stock y retiro de productos.
+### Objetivos específico
+* Diseñar e implementar un sistema de base de datos para aumentar la
+eficiencia en el manejo de stock.
+* Generación de una interfaz gráfica que comunique un programa ejecutándose
+en el ordenador con el arduino.
+* Controlar servomotores con el arduino para general el movimiento del robot.
+
 ## GUI
 Para la interfaz gráfica, se ha utilizado Tkinter. A continuación se muestran la ventana principal y la ventana de solicitud de medicamento. Al ejecutarse la operación de reposición la ventana principal queda bloqueada.
 
-Ventana Principal
-![Imagen de la ventana principal](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg)
+### Ventana Principal
+![Imagen de la ventana principal](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg | width=100)
 
-Ventana de solicitud de medicamento
-![Imagen de la ventana ded solicitud](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaSolicitud.jpg)
+### Ventana de solicitud de medicamento
+![Imagen de la ventana ded solicitud](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaSolicitud.jpg| width=100)
 
 ## Materiales
-* Placa Arduino
+### Generales
+* Placa Arduino UNO + cable USB
 * Teléfono celular con la aplicación IP Webcam
-* Brazo de 6GDL (Se ha utilizado impresión 3D)
 * Ordenador
+* Estante de 4x4 espacios de 10 cm x 10 cm
+* 
+### Brazo de 6GDL
+* 3 Servos MG996R
+* 3 servos SG90
+* 1 servo REV 40 1097 para el slider.
+* Piezas de impresión 3D de las guías del slider.
 
+![Imagen del ensamblaje2](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/impresiones3D.jpg| width=100)
+
+* Estructura de base acrílica para el slider.
+* Perfiles de aluminio para que la guías del slider quepan con precisión.
+* Correa dentada de 6 mm.
+* 2 engranajes con topes para el slider, a uno y otro lado del mismo.
+* 1 botón.
+* Cables jumpers.
+* Adaptador DC de 6V para alimentación de todos los servos.
+
+![Imagen del ensamblaje1](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/BrazoCompleto.jpg | width=100)
 
 ### Pre-requisitos 📋
 
