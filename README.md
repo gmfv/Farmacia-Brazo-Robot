@@ -12,7 +12,7 @@ en el ordenador con el arduino.
 * Controlar servomotores con el arduino para general el movimiento del robot.
 
 ## GUI
-Para la interfaz gráfica, se ha utilizado Tkinter. A continuación se muestran la ventana principal y la ventana de solicitud de medicamento. Al ejecutarse la operación de reposición la ventana principal queda bloqueada.
+A continuación se muestran la ventana principal y la ventana de solicitud de medicamento. Al ejecutarse la operación de reposición la ventana principal queda bloqueada.
 
 ### Ventana Principal
 <img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg" width="300" height="250">
