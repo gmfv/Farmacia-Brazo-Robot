@@ -1,6 +1,15 @@
 # Farmacia con brazo robot y solicitudes en código QR
 Interfaz gráfica para solicitudes de medicamentos vía código QR para farmacia + control del movimiento de un brazo robot de 6GDL + visión artificial implementada para la reposición.
 
+## GUI
+Para la interfaz gráfica, se ha utilizado Tkinter. A continuación se muestran la ventana principal y la ventana de solicitud de medicamento. Al ejecutarse la operación de reposición la ventana principal queda bloqueada.
+
+Ventana Principal
+![Imagen de la ventana principal](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg)
+
+Ventana de solicitud de medicamento
+![Imagen de la ventana ded solicitud](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaSolicitud.jpg)
+
 ## Materiales
 * Placa Arduino
 * Teléfono celular con la aplicación IP Webcam
