@@ -15,7 +15,7 @@ en el ordenador con el arduino.
 Para la interfaz gráfica, se ha utilizado Tkinter. A continuación se muestran la ventana principal y la ventana de solicitud de medicamento. Al ejecutarse la operación de reposición la ventana principal queda bloqueada.
 
 ### Ventana Principal
-<img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg" width="350" height="250">
+<img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg" width="300" height="250">
 
 ### Ventana de solicitud de medicamento
 <img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaSolicitud.jpg" width="350" height="250">
