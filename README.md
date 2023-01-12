@@ -26,7 +26,7 @@ A continuación se muestran la ventana principal y la ventana de solicitud de me
 * Teléfono celular con la aplicación IP Webcam
 * Ordenador
 * Estante de 4x4 espacios de 10 cm x 10 cm
-* 
+
 ### Brazo de 6GDL
 * 3 Servos MG996R
 * 3 servos SG90
