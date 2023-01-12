@@ -84,7 +84,7 @@ Se deben hacer los cambios necesarios en el código pedido.py para lograr una co
 
 * [Tkinter](https://docs.python.org/3/library/tkinter.html/) -Desarrollo de la interfaz gráfica
 * [MySQL-Connector](https://dev.mysql.com/doc/connector-python/en/) - Conexión con la base de datos
-
+* [OpenCV](https://pypi.org/project/opencv-python/) - Reconocimiento de imágenes QR
 
 ----------------------------------------------------------
 
