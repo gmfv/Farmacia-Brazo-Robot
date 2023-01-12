@@ -39,6 +39,9 @@ A continuación se muestran la ventana principal y la ventana de solicitud de me
 * Perfiles de aluminio para que la guías del slider quepan con precisión.
 * Correa dentada de 6 mm.
 * 2 engranajes con topes para el slider, a uno y otro lado del mismo.
+
+<img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/RielesyPoseas.jpg" width="300" height="300">
+
 * 1 botón.
 * Cables jumpers.
 * Adaptador DC de 6V para alimentación de todos los servos.
