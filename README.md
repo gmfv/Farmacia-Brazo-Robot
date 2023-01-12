@@ -15,10 +15,10 @@ en el ordenador con el arduino.
 Para la interfaz gráfica, se ha utilizado Tkinter. A continuación se muestran la ventana principal y la ventana de solicitud de medicamento. Al ejecutarse la operación de reposición la ventana principal queda bloqueada.
 
 ### Ventana Principal
-![Imagen de la ventana principal](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg | width=100)
+<img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaPrincipal.jpg" width="100" height="100">
 
 ### Ventana de solicitud de medicamento
-![Imagen de la ventana ded solicitud](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaSolicitud.jpg| width=100)
+<img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/VentanaSolicitud.jpg" width="100" height="100">
 
 ## Materiales
 ### Generales
@@ -33,7 +33,7 @@ Para la interfaz gráfica, se ha utilizado Tkinter. A continuación se muestran 
 * 1 servo REV 40 1097 para el slider.
 * Piezas de impresión 3D de las guías del slider.
 
-![Imagen del ensamblaje2](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/impresiones3D.jpg| width=100)
+<img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/impresiones3D.jpg" width="100" height="100">
 
 * Estructura de base acrílica para el slider.
 * Perfiles de aluminio para que la guías del slider quepan con precisión.
@@ -43,7 +43,7 @@ Para la interfaz gráfica, se ha utilizado Tkinter. A continuación se muestran 
 * Cables jumpers.
 * Adaptador DC de 6V para alimentación de todos los servos.
 
-![Imagen del ensamblaje1](https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/BrazoCompleto.jpg | width=100)
+<img src="https://github.com/gmfv/Farmacia-Brazo-Robot/blob/main/BrazoCompleto.jpg" width="100" height="100">
 
 ### Pre-requisitos 📋
 
